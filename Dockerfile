@@ -25,11 +25,11 @@ RUN chown -R nobody.nobody /var/www/html && \
   chown -R nobody.nobody /var/log/nginx
 
 VOLUME ["/etc/mysql", "/var/lib/mysql"]
-ADD db.sql /db/db.sql
+ADD /db/db.sql /tmp/db.sql
 RUN /bin/bash -c "/usr/bin/mysqld_safe --skip-grant-tables &" && \
   sleep 5 && \
   mysql -u root -e "CREATE DATABASE cities" && \
-  mysql -u root cities < /db/db.sql
+  mysql -u root cities < /tmp/db.sql
 
 # Switch to use a non-root user from here on
 USER nobody
