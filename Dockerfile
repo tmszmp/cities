@@ -26,7 +26,7 @@ RUN chown -R nobody.nobody /var/www/html && \
 
 VOLUME ["/etc/mysql", "/var/lib/mysql"]
 ADD /db/db.sql /tmp/db.sql
-RUN /usr/bin/mysqld_safe --skip-grant-tables & && \
+RUN /bin/sh -c "/usr/bin/mysqld_safe --skip-grant-tables &" && \
   sleep 5 && \
   mysql -u root -e "CREATE DATABASE cities" && \
   mysql -u root cities < /tmp/db.sql
